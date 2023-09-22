@@ -7,6 +7,7 @@ import SavedResultsList from './components/SavedResultsList';
 function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [savedResults, setSavedResults] = useState([]);
+  const serverUrl = 'http://render-domain'; 
 
   useEffect(() => {
     // Load saved results from sessionStorage when the component mounts
@@ -32,7 +33,7 @@ function App() {
   // Function to handle the search
   const handleSearch = async (term, entity) => {
     try {
-      const apiUrl = `http://localhost:9002/api/search?term=${term}&entity=${entity}`;
+      const apiUrl = `http://localhost:{serverUrl}/api/search?term=${term}&entity=${entity}`;
       const response = await fetch(apiUrl);
 
       if (!response.ok) {
@@ -42,7 +43,7 @@ function App() {
       const data = await response.json();
       setSearchResults(data);
 
-      await fetch('http://localhost:9002/api/search', {
+      await fetch('http://localhost:{serverUrl}/api/search', {
         method: 'POST', // Use POST method to send data to the server
         headers: {
           'Content-Type': 'application/json',
